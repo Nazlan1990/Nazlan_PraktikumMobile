@@ -1,51 +1,40 @@
-package com.example.nazlan_3tib.pertemuan6
+package com.example.nazlan_3tib.Home.pertemuan5
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import com.example.nazlan_3tib.R
-import com.example.nazlan_3tib.databinding.ActivityMainBinding
-import com.example.nazlan_3tib.databinding.ActivitySixthBinding
+import com.example.nazlan_3tib.databinding.ActivityWebViewBinding
 
-class SixthActivity : AppCompatActivity() {
+class WebViewActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySixthBinding
+    private lateinit var binding: ActivityWebViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        binding= ActivitySixthBinding.inflate(layoutInflater)
+        binding = ActivityWebViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        binding.webView.webViewClient = WebViewClient()
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.loadUrl("https://pcr.ac.id")
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
-            title = "Activity Sixth"
-            subtitle = "Penerapan Fragment"
+            title = "Politeknik Caltex Riau"
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         }
-        // Menampilkan fragment pertama secara default
-        replaceFragment(SatuFragment(), addToBackStack = false)
-        // Setup event click untuk mengganti fragment
-        binding.btnFragment1.setOnClickListener { replaceFragment(SatuFragment()) }
-        binding.btnFragment2.setOnClickListener { replaceFragment(DuaFragment()) }
-        binding.btnFragment3.setOnClickListener { replaceFragment(TigaFragment()) }
-    }
-    private fun replaceFragment(fragment: Fragment, addToBackStack: Boolean = true) {
-        val transaction = supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentContainer.id, fragment)
-        if (addToBackStack) transaction.addToBackStack(null)
-        transaction.commit()
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
